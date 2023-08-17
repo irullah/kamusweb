@@ -59,7 +59,7 @@
     <?php 
     if (isset($_GET['kata'])) {
         ?>
-        <h4>Hasil :</h4>
+        <h4>Lorem</h4>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, laborum ab! Minus amet numquam iste repellat, quibusdam natus eligendi aliquid ad. Dolorum eius quod neque repellat laboriosam earum deserunt reiciendis!</p>
         <?php
     }
