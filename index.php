@@ -43,9 +43,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
-                    Translate
+                    Cari
                 </button>
-                
             </div>
         </form>
         </div>
@@ -53,19 +52,22 @@
     </div>
     </div>
 </div>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,128L120,122.7C240,117,480,107,720,90.7C960,75,1200,53,1320,42.7L1440,32L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200"><path fill="#0099ff" fill-opacity="1" d="M0,128L120,122.7C240,117,480,107,720,90.7C960,75,1200,53,1320,42.7L1440,32L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+    <?php 
+    if (isset($_GET['kata'])) {
+        ?>
+        <h4>Hasil :</h4>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, laborum ab! Minus amet numquam iste repellat, quibusdam natus eligendi aliquid ad. Dolorum eius quod neque repellat laboriosam earum deserunt reiciendis!</p>
+        <?php
+    }
+    ?>
+    </div>
+    <div class="col-1"></div>
 </div>
-<?php
-        require "koneksi.php";
 
-        if (isset($_GET['cari'])) {
-            $kata = $_GET['kata'];
-            $queryMAD = mysqli_query($koneksi, "SELECT * FROM sentences WHERE language = 'MAD' and sentence LIKE '%$kata%'");
-
-            while ($tampil = mysqli_fetch_array($queryMAD)) {
-            ?>
-            <?= $tampil['sentence'] ?>
-            <?php } }?>
             
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
