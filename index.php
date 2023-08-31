@@ -57,11 +57,31 @@
     <div class="col-1"></div>
     <div class="col-10">
     <?php 
+    require "koneksi.php";
+
     if (isset($_GET['kata'])) {
-        ?>
-        <h4>Lorem</h4>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo, laborum ab! Minus amet numquam iste repellat, quibusdam natus eligendi aliquid ad. Dolorum eius quod neque repellat laboriosam earum deserunt reiciendis!</p>
+        $kata = '"'.$_GET['kata'].'"';
+        // $queryMAD = mysqli_query($koneksi, "SELECT * FROM sentences WHERE language = 'MAD' and sentence LIKE '%$kata%'");
+        $queryMAD = mysqli_query($koneksi, "SELECT lemmata.*, sentences.id as id_sentence, sentences.*, substitution_lemmata.*, descr_subs_lemmata.* FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+        
+        if (mysqli_num_rows($queryMAD) > 0) { 
+            while ($dataMAD = mysqli_fetch_array($queryMAD)) {
+                $id = $dataMAD['id_sentence'] + 1;
+                // $queryIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE id = '$id'");
+                $queryIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE id = '$id'");
+                $dataIND = mysqli_fetch_array($queryIND);
+            ?> 
+            <h4><?= $dataMAD['basic_lemma'] ?></h4>
+            <p><?= $dataMAD['sentence'] ?></p>
+            <p><?= $dataIND['sentence'] ?></p>
+        
+        
+        
         <?php
+        } } else { ?> 
+            <h4>Tidak ada data!</h4>
+        <?php
+        }
     }
     ?>
     </div>
