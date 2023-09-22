@@ -48,10 +48,9 @@
             </ul>
         </div>
     </div>
-    <div class="col-1"></div>
-    <div class="col-6">
+    <div class="col-9">
         <form action="" method="get">
-            <h1 class="text-center" >Kamus Bahasa Madura</h1>
+            <h1 class="text-center" >Kamus Bahasa Madura - Indonesia</h1>
             <div class="input-group mb-3">
                 <input name="kata" type="cari" class="form-control" placeholder="Kata" aria-label="Kata" aria-describedby="button-addon2" id="kunci" onchange="myFunction(this.value)">
                 <button class="btn btn-primary" type="submit" id="button-addon2">
@@ -75,24 +74,97 @@
 
     if (isset($_GET['kata'])) {
         $kata = '"'.$_GET['kata'].'"';
-        // $queryMAD = mysqli_query($koneksi, "SELECT * FROM sentences WHERE language = 'MAD' and sentence LIKE '%$kata%'");
-        $queryMAD = mysqli_query($koneksi, "SELECT lemmata.*, sentences.id as id_sentence, sentences.*, substitution_lemmata.*, descr_subs_lemmata.* FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
         
-        if (mysqli_num_rows($queryMAD) > 0) { 
-            while ($dataMAD = mysqli_fetch_array($queryMAD)) {
-                $id = $dataMAD['id_sentence'] + 1;
-                // $queryIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE id = '$id'");
-                $queryIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE id = '$id'");
-                $dataIND = mysqli_fetch_array($queryIND);
+        $lemma = mysqli_query($koneksi, "SELECT * FROM `lemmata` WHERE lemmata.basic_lemma = ".$kata.";");
+        if (mysqli_num_rows($lemma) > 0) { 
+            $data_lemma = mysqli_fetch_array($lemma);
+            ?>
+
+            <!-- start arti -->
+            <div class="card">
+                <div class="card-header">
+                    <h4><strong>Arti</strong></h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
+                    <ul>
+            <?php 
+            $sentencesMAD = mysqli_query($koneksi, "SELECT * FROM lemmata JOIN sentences ON sentences.lemma_id = lemmata.id WHERE sentences.language = 'MAD' AND lemmata.basic_lemma = ".$kata." GROUP BY lemmata.id;");
+        
+            while ($dataMAD = mysqli_fetch_array($sentencesMAD)) {
+                $senetncesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$dataMAD['lemma_id']." AND sentences.index = '".$dataMAD['index']."';");
+                $dataIND = mysqli_fetch_array($senetncesIND);
             ?> 
-            <h4><?= $dataMAD['basic_lemma'] ?></h4>
-            <p><?= $dataMAD['sentence'] ?></p>
-            <p><?= $dataIND['sentence'] ?></p>
-        
-        
-        
+                        <li>
+                            <p class="card-text"><?= $dataMAD['sentence'] ?> <br> &rarr; <i style="color: blue; "><?= $dataIND['sentence'] ?></i> </p>
+                        </li>
+        <?php } ?> 
+                    </ul>
+                </div>
+            </div> 
+            <!-- end arti -->
+            
+            <br>
+
+            <!-- start pengucapan -->
+            <div class="card">
+                <div class="card-header">
+                    <h4><strong>Pengucapan</strong></h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
+                    <ul>
         <?php
-        } } else { ?> 
+            $pengucapan =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+            while ($data_pengucapan = mysqli_fetch_array($pengucapan)) { ?>
+                        <li>
+                            <p class="card-text"><?= $data_pengucapan['basic_lemma'] ?>  <?= $data_pengucapan['POS'] ?>. / <?= $data_pengucapan['pronunciation'] ?></p>
+                        </li>
+                <?php } 
+                ?>
+                    </ul>
+                    </div>
+                </div> 
+                <!-- end pengucapan -->
+
+                <br>
+
+                <!-- start kalimat -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4><strong>Kalimat</strong></h4>
+                    </div>
+                    <div class="card-body">
+                    <?php
+            $index = 1;
+            $kalimat =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+            while ($data_kalimat = mysqli_fetch_array($kalimat)) { ?>
+                        <h5 class="card-title"><?= $index ?>. <?= $data_kalimat["basic_lemma"] ?>  <?= $data_kalimat['POS'] ?></h5>
+                        <ul>
+                        <?php
+
+            $kumpulan_kalimat =  mysqli_query($koneksi, "SELECT * FROM `sentences`JOIN lemmata ON lemmata.id = sentences.lemma_id WHERE sentences.language = 'MAD' AND lemmata.homonym_index = ".$index." AND lemmata.basic_lemma = ".$kata.";");
+            $baris = 1;
+            while ($data_kumpulan_kalimat = mysqli_fetch_array($kumpulan_kalimat)) { 
+                if ($baris >= 2){
+                $sentencesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$data_kumpulan_kalimat['lemma_id']." AND sentences.index = '".$data_kumpulan_kalimat['index']."';");
+                $data_kalimat_ind = mysqli_fetch_array($sentencesIND);?>
+                            <li>
+                                <?= $data_kumpulan_kalimat['sentence'] ?> <br> &rarr; <i style="color: blue; "><?= $data_kalimat_ind['sentence'] ?></i>
+                            </li>
+                <?php } $baris++; }
+                ?>
+                </ul>
+                <?php
+            
+        $index++; } 
+        ?>
+                    </div>
+                </div> 
+                <!-- end kalimat -->
+                <br> 
+        <?php
+        } else { ?> 
             <h4>Tidak ada data!</h4>
         <?php
         }
@@ -102,7 +174,22 @@
     <div class="col-1"></div>
 </div>
 
-            
+<!-- start footer -->
+<div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-muted">&copy; 2022 Company, Inc</p>
+
+    <ul class="nav col-md-4 justify-content-end">
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+  </footer>
+</div>
+<!-- end footer -->
+
 </body>
 <script>
 function myFunction(val) {
