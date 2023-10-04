@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translate</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/icons/bootstrap-icons.css">
 </head>
 <body>
+
+<!-- start navbar -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -29,6 +32,7 @@
         </ul>
   </div>
 </nav>
+<!-- end navbar -->
 
 <div style="background-color: #0099ff;">
 <div class="container">
@@ -54,10 +58,7 @@
             <div class="input-group mb-3">
                 <input name="kata" type="cari" class="form-control" placeholder="Kata" aria-label="Kata" aria-describedby="button-addon2" id="kunci" onchange="myFunction(this.value)">
                 <button class="btn btn-primary" type="submit" id="button-addon2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                    Cari
+                    <i class="bi bi-search"></i> Cari
                 </button>
             </div>
         </form>
@@ -65,7 +66,7 @@
     </div>
     </div>
 </div>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200"><path fill="#0099ff" fill-opacity="1" d="M0,128L120,122.7C240,117,480,107,720,90.7C960,75,1200,53,1320,42.7L1440,32L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"></path></svg>
+<img src = "waves/wave.svg" alt="Wave"/>
 <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
@@ -86,20 +87,19 @@
                     <h4><strong>Arti</strong></h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
-                    <ul>
+                    <h5 class="card-title"><?= ucfirst($data_lemma["basic_lemma"]) ?></h5>
+                    <ol>
             <?php 
             $sentencesMAD = mysqli_query($koneksi, "SELECT * FROM lemmata JOIN sentences ON sentences.lemma_id = lemmata.id WHERE sentences.language = 'MAD' AND lemmata.basic_lemma = ".$kata." GROUP BY lemmata.id;");
-        
+
+            $index_arti = 1;
             while ($dataMAD = mysqli_fetch_array($sentencesMAD)) {
                 $senetncesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$dataMAD['lemma_id']." AND sentences.index = '".$dataMAD['index']."';");
                 $dataIND = mysqli_fetch_array($senetncesIND);
             ?> 
-                        <li>
-                            <p class="card-text"><?= $dataMAD['sentence'] ?> <br> &rarr; <i style="color: blue; "><?= $dataIND['sentence'] ?></i> </p>
-                        </li>
-        <?php } ?> 
-                    </ul>
+                        <li><p class="card-text"><span id="arti-<?= $index_arti ?>"><?= $dataMAD['sentence'] ?></span> <br> &rarr; <i style="color: blue; "><?= $dataIND['sentence'] ?></i> </p></li>
+        <?php $index_arti++;} ?> 
+                    </ol>
                 </div>
             </div> 
             <!-- end arti -->
@@ -112,17 +112,34 @@
                     <h4><strong>Pengucapan</strong></h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
-                    <ul>
+                    <h5 class="card-title"><?= ucfirst($data_lemma["basic_lemma"]) ?></h5>
+                    <ol>
         <?php
             $pengucapan =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+            $index_pengucapan = 1;
             while ($data_pengucapan = mysqli_fetch_array($pengucapan)) { ?>
-                        <li>
-                            <p class="card-text"><?= $data_pengucapan['basic_lemma'] ?>  <?= $data_pengucapan['POS'] ?>. / <?= $data_pengucapan['pronunciation'] ?></p>
-                        </li>
-                <?php } 
+                    <li><p class="card-text" ><?= $data_pengucapan['basic_lemma'] ?> <?= $data_pengucapan['POS'] ?>. /
+                    <?php echo '<script>
+                    var kalimat = document.getElementById("arti-'.$index_pengucapan.'").innerHTML;
+                    for (let i = 0; i < kalimat.length; i++) 
+                        {
+                            if (kalimat.substring(i,i+1) === "[") 
+                            {
+                            var posisi_1 = i;
+                            }
+                            if (kalimat.substring(i,i+1) === "]") 
+                            {
+                            var posisi_2 = i;
+                            }
+                        }
+                        hasil = kalimat.substring(posisi_1,posisi_2+1)
+                    document.write(hasil);
+                    </script>' 
+                    ?>
+                    </p></li>
+                <?php $index_pengucapan++; } 
                 ?>
-                    </ul>
+                    </ol>
                     </div>
                 </div> 
                 <!-- end pengucapan -->
@@ -136,37 +153,49 @@
                     </div>
                     <div class="card-body">
                     <?php
-            $index = 1;
+            $index_kalimat = 1;
             $kalimat =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
             while ($data_kalimat = mysqli_fetch_array($kalimat)) { ?>
-                        <h5 class="card-title"><?= $index ?>. <?= $data_kalimat["basic_lemma"] ?>  <?= $data_kalimat['POS'] ?></h5>
+                        <h5 class="card-title" id="kalimat-<?= $index_kalimat ?>"> <?= ucfirst($data_kalimat["basic_lemma"]) ?><sub>[<?= $index_kalimat ?>]</sub>  <?= $data_kalimat['POS'] ?>.</h5>
                         <ul>
                         <?php
 
-            $kumpulan_kalimat =  mysqli_query($koneksi, "SELECT * FROM `sentences`JOIN lemmata ON lemmata.id = sentences.lemma_id WHERE sentences.language = 'MAD' AND lemmata.homonym_index = ".$index." AND lemmata.basic_lemma = ".$kata.";");
+            $kumpulan_kalimat =  mysqli_query($koneksi, "SELECT * FROM `sentences`JOIN lemmata ON lemmata.id = sentences.lemma_id WHERE sentences.language = 'MAD' AND lemmata.homonym_index = ".$index_kalimat." AND lemmata.basic_lemma = ".$kata.";");
             $baris = 1;
             while ($data_kumpulan_kalimat = mysqli_fetch_array($kumpulan_kalimat)) { 
-                if ($baris >= 2){
-                $sentencesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$data_kumpulan_kalimat['lemma_id']." AND sentences.index = '".$data_kumpulan_kalimat['index']."';");
-                $data_kalimat_ind = mysqli_fetch_array($sentencesIND);?>
-                            <li>
-                                <?= $data_kumpulan_kalimat['sentence'] ?> <br> &rarr; <i style="color: blue; "><?= $data_kalimat_ind['sentence'] ?></i>
-                            </li>
-                <?php } $baris++; }
+                if ($kumpulan_kalimat->num_rows >= 2) {
+                    if ($baris >= 2){
+                    $sentencesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$data_kumpulan_kalimat['lemma_id']." AND sentences.index = '".$data_kumpulan_kalimat['index']."';");
+                    $data_kalimat_ind = mysqli_fetch_array($sentencesIND);?>
+                                <li><p class="card-text"><?= $data_kumpulan_kalimat['sentence'] ?> <br> &rarr; <i style="color: blue; "><?= $data_kalimat_ind['sentence'] ?></i></p></li>
+                    <?php } $baris++; }
+                else {
+                    echo '<script>document.getElementById("kalimat-'.$index_kalimat.'").innerHTML = "";</script>';
+                }
+                }
                 ?>
                 </ul>
                 <?php
             
-        $index++; } 
+        $index_kalimat++; } 
         ?>
                     </div>
                 </div> 
                 <!-- end kalimat -->
                 <br> 
         <?php
-        } else { ?> 
-            <h4>Tidak ada data!</h4>
+        } else { 
+        ?> 
+            <h4>Tidak ada kata <?= $_GET['kata'] ?> dalam bahasa madura. Mungkin maksud anda </h4>
+
         <?php
+            $kata = $_GET['kata'];
+            $lemmata = mysqli_query($koneksi, "SELECT basic_lemma FROM lemmata");
+            while ($data_lemmata = mysqli_fetch_array($lemmata)) {
+                $lemma = $data_lemmata['basic_lemma'];
+                $jarak = levenshtein($kata, $lemma);
+                echo "Jarak Levenshtein antara '$kata' dan '$lemma' adalah $jarak <br>"; 
+            }
         }
     }
     ?>
@@ -191,6 +220,8 @@
 <!-- end footer -->
 
 </body>
+
+
 <script>
 function myFunction(val) {
     val = val.toLowerCase()
@@ -222,5 +253,5 @@ function myFunction(val) {
     document.getElementById("kunci").value = hasil;
 }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="bootstrap/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>
