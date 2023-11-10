@@ -39,6 +39,10 @@ function cekPos($string, $koneksi) {
         $substring = $dataPos["tag"].".";
         $description = $dataPos['description'];
         if (strpos($string, $substring) !== false) {
+            if (strpos($string, "Pron.") !== false) {
+                $description = "Pronoun";
+                $substring = "Pron.";
+            }
             $ket = cekKetPos($substring);
             $string = str_replace($substring, "
             <span id='tooltip'>

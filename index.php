@@ -105,7 +105,7 @@
                 $senetncesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$dataMAD['lemma_id']." AND sentences.index = '".$dataMAD['index']."';");
                 $dataIND = mysqli_fetch_array($senetncesIND);
             ?> 
-                        <li><p class="card-text"><span class="arti" id="arti-<?= $index_arti ?>"><?= $string ?></span> <br> &rarr; <span style="color: blue; "><?= $dataIND['sentence'] ?></span> </p></li>
+                        <li><p class="card-text"><span class="arti" id="arti-<?= $index_arti ?>"><?= $string ?></span> <br> &rarr; <span id="lang-id"><?= $dataIND['sentence'] ?></span> </p></li>
         <?php $index_arti++;} ?> 
                     </ol>
                 </div>
@@ -134,12 +134,12 @@
                 $ket = cekKetPos($pos.".");
                 
                 ?>
-                    <li><p class="card-text" ><b><?= $data_pengucapan['basic_lemma'] ?></b>
+                    <li><p class="card-text" ><?= $data_pengucapan['basic_lemma'] ?>
                         <span id="tooltip">
                             <span id="tooltiptext">Kelas kata : <?= $ket." (<i>".$data_pengucapan['description']."</i>)" ?></span>
                             <span><i><?= $pos ?></i></span>
                         </span> / 
-                        <span id="pengucapan-hidden"><?= $result ?></span>
+                        <span id="pronunciation"><?= $result ?></span>
                     </p></li>
                 <?php $index_pengucapan++; } 
                 ?>
@@ -185,7 +185,7 @@
                         $string = cekKategori($string, $koneksi);
                         $sentencesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$data_kumpulan_kalimat['lemma_id']." AND sentences.index = '".$data_kumpulan_kalimat['index']."';");
                         $data_kalimat_ind = mysqli_fetch_array($sentencesIND);?>
-                                    <li><p class="card-text"><?= $string ?> <br> &rarr; <span style="color: blue; "><?= $data_kalimat_ind['sentence'] ?></span></p></li>
+                                    <li><p class="card-text"><?= $string ?> <br> &rarr; <span id="lang-id"><?= $data_kalimat_ind['sentence'] ?></span></p></li>
                     <?php } $baris++; }
                 else {
                     echo '<script>document.getElementById("kalimat-'.$index_kalimat.'").innerHTML = "";</script>';
