@@ -1,3 +1,105 @@
+:root {
+    --white-color:                  #ffffff;
+    --primary-color:                #81B29A;
+    --secondary-color:              #3D405B;
+    --section-bg-color:             #F4F1DE;
+    --custom-btn-bg-color:          #F2CC8F;
+    --custom-btn-bg-hover-color:    #E07A5F;
+    --dark-color:                   #000000;
+    --p-color:                      #717275;
+    --link-hover-color:             #F2CC8F;
+  
+    --body-font-family:             'DM Sans', sans-serif;
+  
+    --h1-font-size:                 42px;
+    --h2-font-size:                 36px;
+    --h3-font-size:                 28px;
+    --h4-font-size:                 24px;
+    --h5-font-size:                 22px;
+    --h6-font-size:                 20px;
+    --p-font-size:                  18px;
+    --menu-font-size:               16px;
+    --btn-font-size:                14px;
+  
+    --border-radius-large:          100px;
+    --border-radius-medium:         20px;
+    --border-radius-small:          10px;
+  
+    --font-weight-normal:           400;
+    --font-weight-medium:           500;
+    --font-weight-bold:             700;
+  }
+
+.social-icon {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .social-icon-item {
+    list-style: none;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .social-icon-link {
+    background: var(--secondary-color);
+    border-radius: var(--border-radius-large);
+    color: var(--white-color);
+    font-size: var(--btn-font-size);
+    display: block;
+    margin-right: 5px;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    line-height: 36px;
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .social-icon-link:hover {
+    background: var(--primary-color);
+    color: var(--white-color);
+  }
+  
+  .member-block-image-wrap {
+    border-radius: var(--border-radius-medium);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .member-block-image-wrap:hover .member-block-image {
+    transform: scale(1.2);
+  }
+  
+  .member-block-image-wrap:hover .social-icon {
+    opacity: 1;
+  }
+  
+  .member-block-image-wrap .social-icon {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius-large);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.5s;
+    padding: 15px 20px;
+    width: auto;
+  }
+  
+  .member-block-image {
+    transition: all 0.3s;
+  }
+  
+  .member-block-info {
+    padding: 10px;
+  }
+  
+  .member-block-info h4,
+  .member-block-info p {
+    margin-bottom: 0;
+  }
+
 #tooltip {
     position: relative;
     cursor: pointer;
@@ -49,10 +151,38 @@ sub {
     cursor: pointer;
 }
 
-#pronunciation {
+#card-pengucapan {
     visibility: hidden;
 }
 
 #lang-id {
     color: blue;
+}
+
+body {
+    font-family: Candara;
+}
+
+#background-biru {
+    color: #fff;
+}
+
+.judul {
+    text-align: center;
+    font: bold;
+}
+
+.tim {
+    margin-top: 50px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tim .square {
+    text-align: center;
+    width: 150px; 
+    height: 250px;
+    margin-right: 20px;
 }
