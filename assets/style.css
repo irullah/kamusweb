@@ -139,15 +139,15 @@
 }
 
 a {
-    color:grey;
-    text-decoration: none;
+    color:gray;
+    /* text-decoration: none; */
 }
 
-a:hover {
+/* a:hover {
     text-decoration: underline;
-}
+} */
 
-sub {
+#pointer {
     cursor: pointer;
 }
 
@@ -185,4 +185,8 @@ body {
     width: 150px; 
     height: 250px;
     margin-right: 20px;
+}
+
+.about {
+  font-size: large;
 }

@@ -28,11 +28,11 @@
 </nav> -->
 <!-- end navbar -->
 
-<div style="background-color: #0099ff;">
+<div style="background-color: #000b76;">
 <div class="container">
   <div style="padding-top: 60px;" class="row">
-    <div class="col-3">
-        <div class="alert text-left alert-warning" style="font-family: 'Courier, monospace;" role="alert">
+    <div class="col-4">
+        <div class="alert text-left alert-warning" style="font-family:sans-serif" role="alert">
             <h4 class="alert-heading">Petunjuk</h4>
             <p class="mb-0">Menuliskan <strong>.d</strong> berubah menjadi <strong>ḍ</strong></p>
             <p class="mb-0">Menuliskan <strong>.t</strong> berubah menjadi <strong>ṭ</strong></p>
@@ -54,9 +54,9 @@
             </ul>
         </div>
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <form action="" method="get">
-            <h1 class="text-center" >Kamus Bahasa Madura - Indonesia</h1>
+            <h1 class="text-center " id="background-biru">Kamus Bahasa Madura - Indonesia</h1>
             <div class="input-group mb-3">
                 <input name="kata" type="cari" value="<?= isset($_GET['kata']) ? strip_tags($_GET['kata']) : ''; ?>" class="form-control" placeholder="Kata" aria-label="Kata" aria-describedby="button-addon2" id="kunci" onchange="myFunction(this.value)">
                 <button class="btn btn-primary" type="submit" id="button-addon2">
@@ -300,7 +300,6 @@ function myFunction(val) {
         var container = document.getElementById('arti-kalimat-target');
         container.scrollIntoView({ behavior: 'smooth' });
     }
-
 </script>
 <script src="assets/bootstrap/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>
