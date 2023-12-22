@@ -33,7 +33,7 @@
   <div style="padding-top: 60px;" class="row">
     <div class="col-4">
         <div class="alert text-left alert-warning" style="font-family:sans-serif" role="alert">
-            <h4 class="alert-heading">Petunjuk</h4>
+            <h4 class="alert-heading">Petunjuk Penulisan Karakter Beraksen:</h4>
             <p class="mb-0">Menuliskan <strong>.d</strong> berubah menjadi <strong>ḍ</strong></p>
             <p class="mb-0">Menuliskan <strong>.t</strong> berubah menjadi <strong>ṭ</strong></p>
             <p class="mb-0">Menuliskan <strong>^a</strong> berubah menjadi <strong>â</strong></p>

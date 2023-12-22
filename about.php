@@ -36,11 +36,10 @@
     <div class="row">
         <div class="col-6" style="margin-top:5%;" id="sekilas">
             <h4><b>Referensi</b></h4>
-            <p>Aplikasi ini mengacu pada 2 jurnal, yaitu:</p>
             <ol>
-                <li id="ref1">N. Ifada, F. H. Rachman, M. W. M. A. Syauqy, S. Wahyuni, and A. Pawitra, "MadureseSet: Madurese-Indonesian Dataset." <i>Data in Brief 48</i> (2023): 109035. DOI: <a href="https://doi.org/10.1016/j.dib.2023.109035">https://doi.org/10.1016/j.dib.2023.109035</a></li>
-                <li id="ref2"><a href="http://refhub.elsevier.com/S2352-3409(23)00153-1/sbref0001">A. Pawitra, Kamus Lengkap Bahasa Madura-Indonesia [<i>The Complete Dictionary of Madurese-Indonesian</i>], Dian Rakyat, Jakarta, 2009.</a></li>
-                <li id="ref3">N. Ifada, F. H. Rachman, and S. Wahyuni, "Character-based String Matching Similarity Algorithms for Madurese Spelling Correction: A Preliminary Study," in <i>International Conference on Electrical Engineering and Informatics (ICEEI) 2023</i>, Bandung, 2023, p. [In Press]: IEEE.</li>
+                <li id="ref1">Ifada, N., Rachman, F.H., Syauqy, M.W.M.A., Wahyuni, S. and Pawitra, A., 2023. MadureseSet: Madurese-Indonesian Dataset. <i>Data in Brief</i>, 48, p.109035. DOI: <a href="https://doi.org/10.1016/j.dib.2023.109035">https://doi.org/10.1016/j.dib.2023.109035</a></li>
+                <li id="ref2">Pawitra, A., 2009. <i>Kamus Lengkap Bahasa Madura-Indonesia</i>, Dian Rakyat.</li>
+                <li id="ref3">Ifada, N., Rachman, F. H., and Wahyuni, S., 2023, December. Character-based String Matching Similarity Algorithms for Madurese Spelling Correction: A Preliminary Study, in <i>International Conference on Electrical Engineering and Informatics (ICEEI) (pp. 432-437). IEEE. DOI: <a href="https://doi.org/10.1109/ICEEI59426.2023.10346716">https://doi.org/10.1109/ICEEI59426.2023.10346716</a></li>
             </ol>
         </div>
         <div class="col-1"></div>
@@ -66,8 +65,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Noor Ifada</h4>
+            <div class="member-block-info text-center">
+                <h5>Noor Ifada</h5>
             </div>
         </div>
     </div>
@@ -83,8 +82,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Fika Hastarita Rachman</h4>
+            <div class="member-block-info text-center">
+                <h5 class="text-center">Fika Hastarita Rachman</h5>
             </div>
         </div>
     </div>
@@ -101,8 +100,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4> M Wildan Mubarok Asy Syauqy</h4>
+            <div class="member-block-info text-center">
+                <hh54> M Wildan Mubarok Asy Syauqy</h5>
             </div>
         </div>
     </div>
@@ -119,8 +118,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Sri Wahyuni</h4>
+            <div class="member-block-info text-center">
+                <h5>Sri Wahyuni</h5>
             </div>
         </div>
     </div>
@@ -132,8 +131,8 @@
 
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Adrian Pawitra</h4>
+            <div class="member-block-info text-center">
+                <h5>Adrian Pawitra</h5>
             </div>
         </div>
     </div>
@@ -149,8 +148,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Moh Amirullah</h4>
+            <div class="member-block-info text-center">
+                <h5>Moh Amirullah</h5>
             </div>
         </div>
     </div>
@@ -166,8 +165,8 @@
                 </ul>
             </div>
 
-            <div class="member-block-info d-flex align-items-center">
-                <h4>Muhammad Fathuthoriq</h4>
+            <div class="member-block-info text-center">
+                <h5>Muhammad Fathuthoriq</h5>
             </div>
         </div>
     </div>
