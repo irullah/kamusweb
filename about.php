@@ -101,7 +101,7 @@
             </div>
 
             <div class="member-block-info text-center">
-                <hh54> M Wildan Mubarok Asy Syauqy</h5>
+                <h5> M Wildan Mubarok Asy Syauqy</h5>
             </div>
         </div>
     </div>

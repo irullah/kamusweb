@@ -1,8 +1,8 @@
 <?php
 //koneksi ke database
 $host = "localhost";
-$user = "root";
-$pass = "";
+$user = "mbkm";
+$pass = "123";
 $database = "madureseset";
 
 $koneksi = mysqli_connect($host,$user,$pass,$database);
