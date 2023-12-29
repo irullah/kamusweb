@@ -190,3 +190,83 @@ body {
 .about {
   font-size: large;
 }
+
+.gambar {
+  height:500px;
+  width:500px;
+}
+
+@media only screen and (max-width: 768px) {
+  #halaman_about {
+      font-size: 12px;
+  }
+
+  #halaman_about .judul {
+      font-size: 24px; 
+  }
+
+
+
+  #halaman_about .col-5,
+  #halaman_about .col-6,
+  #halaman_about .col-1 {
+      width: 100%;
+      margin-top: 20px;
+  }
+
+  #halaman_about .member-block {
+      margin-bottom: 20px;
+  }
+
+  #halaman_about .member-block-image {
+      width: 100%;
+      height: auto;
+  }
+  #halaman_about .about {
+    font-size: 14px;
+  }
+
+  #halaman_about .gambar {
+    height:300px;
+    width:300px;
+    display:block; margin:auto;
+  }
+
+  #halaman_about .tim {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  #halaman_about .square {
+      margin-bottom: 20px;
+      width: 200px; 
+      height: 260px;
+      display: block;
+      margin: auto;
+  }
+
+  #halaman_about .member-block {
+      text-align: center; 
+  }
+
+  #halaman_about .foto {
+    width: 300px;
+    height: 300px;
+  }
+
+  #halaman_kamus .alert {
+    margin-bottom: 15px;
+  }
+
+  #halaman_kamus .col-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  #halaman_kamus .col-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+
+}

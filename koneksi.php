@@ -1,8 +1,8 @@
 <?php
 //koneksi ke database
 $host = "localhost";
-$user = "mbkm";
-$pass = "123";
+$user = "root";
+$pass = "";
 $database = "madureseset";
 
 $koneksi = mysqli_connect($host,$user,$pass,$database);
@@ -219,7 +219,7 @@ function addLink($string, $basic, $koneksi) {
                     if ($posLemma->num_rows > 0) {
                         while ($data = mysqli_fetch_array($posLemma)) {
                             if ($basic != $data['basic_lemma']) {
-                                $element2 = str_replace($replaced, '<a href="http://localhost/kamus/?kata='.$data['basic_lemma'].'">'.$replaced.'</a>', $element2);?>
+                                $element2 = str_replace($replaced, '<a href="kamus.php?kata='.$data['basic_lemma'].'">'.$replaced.'</a>', $element2);?>
                                 <?php
                                 break;
                             }
@@ -229,7 +229,7 @@ function addLink($string, $basic, $koneksi) {
                         if ($pos->num_rows > 0) {
                             while ($data = mysqli_fetch_array($pos)) {
                                 if ($basic != $data['basic_lemma']) {
-                                    $element2 = str_replace($replaced, '<a href="http://localhost/kamus/?kata='.$data['basic_lemma'].'">'.$replaced.'</a>', $element2);?>
+                                    $element2 = str_replace($replaced, '<a href="kamus.php?kata='.$data['basic_lemma'].'">'.$replaced.'</a>', $element2);?>
                                     <?php
                                     break;
                                 }

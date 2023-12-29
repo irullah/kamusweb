@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="assets/bootstrap/icons/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body id="halaman_about">
 <div style="background-color: #000b76;">
 <div class="container about" id="background-biru">
     <div style="padding-top: 60px;" class="row">
         <h3 class="judul"><b>TENTANG APLIKASI</b></h3>
         <div class="col-5">
-            <img style="margin-top:200px; height:500px; width:500px;" src = "assets\gambar\programming_and_web_technology_vector.png" alt="Wave"/>
+            <img class="gambar" style="margin-top:5%;" src = "assets\gambar\programming_and_web_technology_vector.png" alt="Wave"/>
         </div>
-        <div class="col-1"></div>
-        <div class="col-6" style="margin-top:10%;" id="sekilas">
+        <div class="col-6" style="margin-top:5%;" id="sekilas">
             <h4><b>Tentang Aplikasi Kamus Bahasa Madura-Indonesia Daring</b></h4>
             <p>Aplikasi Kamus Bahasa Madura-Indonesia ini merupakan kamus daring yang basisdatanya mengacu pada MadureseSet <span onclick="scrollToRef1()" id="pointer">[1]</span>, yaitu hasil digitalisasi dari Kamus Lengkap Bahasa Madura Indonesia <span onclick="scrollToRef2()" id="pointer">[2]</span> versi cetak. Aplikasi ini dibuat untuk memudahkan pencarian dan contoh penggunaan suatu kata (lema/sub lema) dalam Bahasa Madura sekaligus artinya dalam Bahasa Indonesia. Dengan demikian, aplikasi ini dapat menjadi alat penting bagi pembelajar bahasa, peneliti, penulis, dan siapa pun yang membutuhkan bantuan cepat dan akurat dalam memahami kosakata Bahasa Madura.</p>
             <br>
@@ -39,12 +38,11 @@
             <ol>
                 <li id="ref1">Ifada, N., Rachman, F.H., Syauqy, M.W.M.A., Wahyuni, S. and Pawitra, A., 2023. MadureseSet: Madurese-Indonesian Dataset. <i>Data in Brief</i>, 48, p.109035. DOI: <a href="https://doi.org/10.1016/j.dib.2023.109035">https://doi.org/10.1016/j.dib.2023.109035</a></li>
                 <li id="ref2">Pawitra, A., 2009. <i>Kamus Lengkap Bahasa Madura-Indonesia</i>, Dian Rakyat.</li>
-                <li id="ref3">Ifada, N., Rachman, F. H., and Wahyuni, S., 2023, December. Character-based String Matching Similarity Algorithms for Madurese Spelling Correction: A Preliminary Study, in <i>International Conference on Electrical Engineering and Informatics (ICEEI) (pp. 432-437). IEEE. DOI: <a href="https://doi.org/10.1109/ICEEI59426.2023.10346716">https://doi.org/10.1109/ICEEI59426.2023.10346716</a></li>
+                <li id="ref3">Ifada, N., Rachman, F. H., and Wahyuni, S., 2023, December. Character-based String Matching Similarity Algorithms for Madurese Spelling Correction: A Preliminary Study, in <i>International Conference on Electrical Engineering and Informatics (ICEEI)</i> (pp. 432-437). IEEE. DOI: <a href="https://doi.org/10.1109/ICEEI59426.2023.10346716">https://doi.org/10.1109/ICEEI59426.2023.10346716</a></li>
             </ol>
         </div>
-        <div class="col-1"></div>
-        <div class="col-5">
-            <img style="height:400px; width:400px;" src = "assets\gambar\books.png" alt="Books"/>
+        <div class="col-4">
+            <img class="gambar" src ="assets\gambar\books.png" alt="Books"/>
         </div>
     </div>
 </div>
@@ -179,8 +177,8 @@
     <p class="col-md-4 mb-0 text-muted">&copy; 2024 Universitas Trunojoyo Madura, Inc</p>
 
     <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="http://localhost/kamus/" class="nav-link px-2 text-muted">Kamus</a></li>
-      <li class="nav-item"><a href="http://localhost/kamus/about.php" class="nav-link px-2 text-muted">About</a></li>
+      <li class="nav-item"><a href="kamus.php" class="nav-link px-2 text-muted">Kamus</a></li>
+      <li class="nav-item"><a href="about.php" class="nav-link px-2 text-muted">About</a></li>
     </ul>
   </footer>
 </div>

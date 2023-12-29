@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/bootstrap/icons/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body id="halaman_kamus">
 <!-- start navbar -->
 <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
@@ -31,6 +31,7 @@
 <div style="background-color: #000b76;">
 <div class="container">
   <div style="padding-top: 60px;" class="row">
+    <h1 class="text-center " id="background-biru">Kamus Bahasa Madura - Indonesia</h1>
     <div class="col-4">
         <div class="alert text-left alert-warning" style="font-family:sans-serif" role="alert">
             <h4 class="alert-heading">Petunjuk Penulisan Karakter Beraksen:</h4>
@@ -56,7 +57,6 @@
     </div>
     <div class="col-8">
         <form action="" method="get">
-            <h1 class="text-center " id="background-biru">Kamus Bahasa Madura - Indonesia</h1>
             <div class="input-group mb-3">
                 <input name="kata" type="cari" value="<?= isset($_GET['kata']) ? strip_tags($_GET['kata']) : ''; ?>" class="form-control" placeholder="Kata" aria-label="Kata" aria-describedby="button-addon2" id="kunci" onchange="myFunction(this.value)">
                 <button class="btn btn-primary" type="submit" id="button-addon2">
@@ -68,7 +68,7 @@
     </div>
     </div>
 </div>
-<img src = "assets/gambar/wave.svg" alt="Wave"/>
+<img src = "assets/gambar/wave.svg" style="margin-bottom: 5% ;" alt="Wave"/>
 <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
@@ -93,7 +93,28 @@
                     <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
                     <ol>
             <?php 
-            $sentencesMAD = mysqli_query($koneksi, "SELECT lemmata.*, sentences.*, substitution_lemmata.POS, part_of_speech.description FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key LEFT JOIN part_of_speech on substitution_lemmata.POS = part_of_speech.tag WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+            $sentencesMAD = mysqli_query($koneksi, 
+            "SELECT
+                sentences.lemma_id,
+                MIN(sentences.sentence) AS sentence,
+                MIN(sentences.index) AS sentence_index,
+                MIN(substitution_lemmata.POS) AS POS,
+                MIN(part_of_speech.description) AS description
+            FROM
+                lemmata
+            RIGHT JOIN
+                sentences ON lemmata.id = sentences.lemma_id
+            LEFT JOIN
+                substitution_lemmata ON sentences.id = substitution_lemmata.sentence_id
+            LEFT JOIN
+                descr_subs_lemmata ON substitution_lemmata.description = descr_subs_lemmata.key
+            LEFT JOIN
+                part_of_speech ON substitution_lemmata.POS = part_of_speech.tag
+            WHERE
+                language = 'MAD' AND basic_lemma LIKE " . $kata . " AND sentences.index = 1
+            GROUP BY
+                sentences.lemma_id
+            ;");
 
             $index_arti = 1;
             while ($dataMAD = mysqli_fetch_array($sentencesMAD)) {
@@ -104,7 +125,7 @@
                 $string = cekJenis($string, $koneksi);
                 $string = cekKategori($string, $koneksi);
 
-                $senetncesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$dataMAD['lemma_id']." AND sentences.index = '".$dataMAD['index']."';");
+                $senetncesIND = mysqli_query($koneksi, "SELECT * FROM sentences WHERE sentences.language = 'IND' AND sentences.lemma_id = ".$dataMAD['lemma_id']." AND sentences.index = '".$dataMAD['sentence_index']."';");
                 $dataIND = mysqli_fetch_array($senetncesIND);
             ?> 
                         <li><p class="card-text"><span class="arti" id="arti-<?= $index_arti ?>"><?= $string ?></span> <br> &rarr; <span id="lang-id"><?= $dataIND['sentence'] ?></span> </p></li>
@@ -168,38 +189,59 @@
             </div> 
             <!-- end kalimat -->
             <br>
+
             <!-- start pengucapan -->
-            <div class="card" id="card-pengucapan">
+            <!-- <div class="card" id="card-pengucapan">
                 <div class="card-header">
                     <h4><strong>Pengucapan</strong></h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><?= $data_lemma["basic_lemma"] ?></h5>
-                    <ol>
+                    <h5 class="card-title"> -->
+                        <?php
+                        // echo $data_lemma["basic_lemma"]
+                        ?>
+                    <!-- </h5>
+                    <ol> -->
         <?php
-            $pengucapan =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS, part_of_speech.description FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key LEFT JOIN part_of_speech on substitution_lemmata.POS = part_of_speech.tag WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
-            $index_pengucapan = 1;
-            while ($data_pengucapan = mysqli_fetch_array($pengucapan)) { 
-                $pattern = "/\[([^\]]+)\]/";
-                $string = $data_pengucapan['sentence'];
-                preg_match($pattern, $string, $matches);
-                $result = $matches[0];
-                $pos = $data_pengucapan['POS'];
-                $ket = cekKetPos($pos.".");
+            // $pengucapan =  mysqli_query($koneksi, "SELECT lemmata.id, lemmata.basic_lemma, lemmata.pronunciation, sentences.sentence, substitution_lemmata.POS, part_of_speech.description FROM lemmata RIGHT JOIN sentences on lemmata.id = sentences.lemma_id LEFT JOIN substitution_lemmata on sentences.id = substitution_lemmata.sentence_id LEFT JOIN descr_subs_lemmata on substitution_lemmata.description = descr_subs_lemmata.key LEFT JOIN part_of_speech on substitution_lemmata.POS = part_of_speech.tag WHERE language = 'MAD' and basic_lemma LIKE ".$kata." GROUP BY lemmata.id ;");
+            // $index_pengucapan = 1;
+            // while ($data_pengucapan = mysqli_fetch_array($pengucapan)) { 
+            //     $pattern = "/\[([^\]]+)\]/";
+            //     $string = $data_pengucapan['sentence'];
+            //     preg_match($pattern, $string, $matches);
+            //     $result = $matches[0];
+            //     $pos = $data_pengucapan['POS'];
+            //     $ket = cekKetPos($pos.".");
                 
                 ?>
-                    <li><p class="card-text" ><?= $data_pengucapan['basic_lemma'] ?>
+                    <!-- <li><p class="card-text" >
+                        <?php 
+                    // echo $data_pengucapan['basic_lemma'] 
+                    ?>
                         <span id="tooltip">
-                            <span id="tooltiptext">Kelas kata : <?= $ket." (<i>".$data_pengucapan['description']."</i>)" ?></span>
-                            <span><i><?= $pos ?></i></span>
+                            <span id="tooltiptext">Kelas kata :  -->
+                                <?php 
+                                // echo $ket." (<i>".$data_pengucapan['description']."</i>)"
+                                ?>
+                                <!-- </span>
+                            <span><i> -->
+                                <?php 
+                            // echo $pos 
+                            ?>
+                            <!-- </i></span>
                         </span> / 
-                        <span id="pronunciation"><?= $result ?></span>
-                    </p></li>
-                <?php $index_pengucapan++; } 
+                        <span id="pronunciation"> -->
+                            <?php 
+                            // echo $result 
+                            ?>
+                        <!-- </span>
+                    </p></li> -->
+                <?php 
+                // echo $index_pengucapan++; } 
                 ?>
-                    </ol>
+                    <!-- </ol>
                     </div>
-                </div> 
+                </div>  -->
                 <!-- end pengucapan -->
 
                 
@@ -222,7 +264,7 @@
             asort($distances);
             $terdekat = array_slice($distances, 0, 10, true);
             foreach ($terdekat as $kata => $jarak) {
-                echo "<a href='http://localhost/kamus/?kata=$kata'>$kata</a><br>";
+                echo "<a href='kamus.php?kata=$kata'>$kata</a><br>";
             }
         }
     }
@@ -237,8 +279,8 @@
     <p class="col-md-4 mb-0 text-muted">&copy; 2024 Universitas Trunojoyo Madura, Inc</p>
 
     <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="http://localhost/kamus/" class="nav-link px-2 text-muted">Kamus</a></li>
-      <li class="nav-item"><a href="http://localhost/kamus/about.php" class="nav-link px-2 text-muted">About</a></li>
+      <li class="nav-item"><a href="kamus.php" class="nav-link px-2 text-muted">Kamus</a></li>
+      <li class="nav-item"><a href="about.php" class="nav-link px-2 text-muted">About</a></li>
     </ul>
   </footer>
 </div>
